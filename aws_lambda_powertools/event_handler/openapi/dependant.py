@@ -24,7 +24,10 @@ from aws_lambda_powertools.event_handler.openapi.params import (
     create_response_field,
     get_flat_dependant,
 )
-from aws_lambda_powertools.event_handler.openapi.types import OpenAPIResponse, OpenAPIResponseContentModel
+from aws_lambda_powertools.event_handler.openapi.types import (
+    OpenAPIResponse,
+    OpenAPIResponseContentModel,
+)
 
 if TYPE_CHECKING:
     from pydantic import BaseModel
@@ -106,7 +109,7 @@ def get_typed_signature(call: Callable[..., Any]) -> inspect.Signature:
     signature = inspect.signature(call)
 
     # Gets the global namespace for the call. This is used to resolve forward references.
-    globalns = getattr(call, "__global__", {})
+    globalns = getattr(call, "__globals__", {})
 
     typed_params = [
         inspect.Parameter(
